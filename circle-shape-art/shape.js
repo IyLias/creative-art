@@ -51,6 +51,11 @@ class D2Shape{
     
     }
 
+    static createTriangle(color,x1,y1,x2,y2,x3,y3){
+
+
+    }
+
 
     setStroke(isStroke,strokeColor,myStrokeWeight){
         this.isStroke = isStroke;
@@ -223,5 +228,95 @@ class MyRect extends D2Shape{
 }
 
 
+// MyRect set for drawing lots of ellipses
+class MyRectCollection{
+
+    constructor(rectNum){
+        this.myRects = [];        
+        this.rectNum = rectNum;
+        for(var i=0;i<this.rectNum;i++){
+            let myColor = this.generateColor();
+            let [myX,myY,myW,myH] = this.generatePositionAndSize();
+            console.log(typeof(myX),typeof(myY));
+            let myRect = new MyRect(myColor,myX,myY,myW,myH);
+
+            // need to set all properties
+            // color, x,y,w,h
+            // isStroke, stroke, strokeWeight, isFill
+            // isStroke and isFill can't be both false
+            let [isStroke,strokeColor,strokeWeight,isFill] = this.generateStrokeAndFill();
+            myRect.setStroke(isStroke,strokeColor,strokeWeight);
+            myRect.setFill(isFill);
+
+            this.myRects.push(myRect);
+        }
+
+    }
+
+    // generate random color
+    generateColor(){
+        const unit = ['0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'];
+        const length = 6;
+        let color = '#';
+
+        for(var i=0;i<length;i++)
+            color += unit[Math.floor(Math.random()*16)];
+
+        return color;
+    }
+
+    // generate position and size
+    generatePositionAndSize(){
+        let x,y;
+        x = Math.floor(Math.random()*SCREEN_WIDTH);
+        y = Math.floor(Math.random()*SCREEN_HEIGHT);
+
+        let w,h;
+        const alpha = 0.1;
+        const sizeSeed = 300;
+        w = Math.ceil((Math.random()+alpha)*sizeSeed);
+        h = Math.ceil((Math.random()+alpha)*sizeSeed);
+        
+        console.log(x,y,w,h);
+        return [x,y,w,h];
+    }
+
+    // generate stroke and fill values
+    generateStrokeAndFill(){
+        const WEIGHTMAX = 10;
+        const alpha = 0.1;
+
+        let isStroke,strokeColor,strokeWeight,isFill;
+        isStroke = (Math.floor(Math.random()*100))%2 ? true : false;
+        if(isStroke === false){
+            strokeColor = 0, strokeWeight = 0;
+            isFill = true;
+        }else{
+            strokeColor = this.generateColor();
+            strokeWeight = Math.floor((Math.random()+alpha)*WEIGHTMAX);
+            isFill = (Math.floor(Math.random()*100))%2 ? true : false;
+        }
+
+        return [isStroke,strokeColor,strokeWeight,isFill];
+    }
 
 
+
+    draw(){
+        for(var i=0;i<this.myRects.length;i++)
+            this.myRects[i].draw();
+    }
+
+
+}
+
+
+
+class MyTriangle extends D2Shape{
+
+
+
+
+
+
+}
