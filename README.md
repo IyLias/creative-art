@@ -1,5 +1,5 @@
-# creative-art
-creative and graphic art work using javascript and p5.js
+# creative-art 
+creative and generative art work using javascript and p5.js
 
 ## p5.js reference
 
