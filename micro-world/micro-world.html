@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>p5.js Sketch</title>
+  <!-- Load the p5.js library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js"></script>
+</head>
+<body>
+  <!-- Your sketch script -->
+  <script>
+    let f = 0;
+    function draw() {
+      // Increment frame counter and initialize canvas if first frame
+      f++ || createCanvas(W = 400, W, WEBGL);
+      
+      // Rotate scene on the Y-axis
+      rotateY(f / W);
+      
+      // Setup point lights at different positions
+      [7, 9, -7].map(r => pointLight(220, 0, -W * r, 0));
+      
+      // Draw a grid of spheres with dynamic sizes
+      for (let y = -W; y <= W; y += 30) {
+        for (let z = -220; z <= 220; z += 30) {
+          for (let x = -220; x <= 220; x += 30) {
+            let Y = y - f % 30; // Dynamic vertical offset
+            push(); // Save current state
+            let E = 220 - dist(0, 0, 0, x, Y, z); // Size based on distance
+            translate(x, Y, z); // Move to the sphere's position
+            sphere(E / 9, 33); // Draw sphere with detail level 33
+            pop(); // Restore previous state
+          }
+        }
+      }
+      // Draw an additional large sphere at the origin
+      sphere(W, 33);
+    }
+  </script>
+</body>
+</html>
